@@ -1,0 +1,23 @@
+.post-container{
+    display:flex;
+    justify-content:space-around;
+    flex-direction:row;
+    align-items:center;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom:100px;
+    
+
+}
+
+.img-container img{
+    max-width:400px;
+    margin: 15px 15px 15px 15px
+}
+
+.text-container {
+    overflow:hidden;
+    max-width :600px;
+    margin: 15px 15px 15px 15px
+
+    
+}

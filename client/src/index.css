@@ -1,0 +1,11 @@
+* {
+    margin:0;
+    padding:0;
+    
+  }
+  
+  body{
+    background:rgb(255, 255, 255);
+    max-width:1444px;
+    margin :0 auto;
+  }

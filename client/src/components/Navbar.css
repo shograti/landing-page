@@ -1,0 +1,33 @@
+a {
+    text-decoration: none;
+    color:rgb(12, 155, 190);
+    margin-right: 20px;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    
+  }
+  .navbar {
+    background-color: rgba(255, 255, 255, 0.815);
+    display:flex;
+    padding-left:3rem;
+    align-items:center;
+    margin-top:30px;
+    justify-content: space-between;
+    padding-right:1rem;
+    flex-direction:row;
+    
+  }
+  
+  .title {
+    text-transform: uppercase;
+    font-family: 'Poppins', sans-serif;
+    color:rgb(12, 155, 190);
+    font-size:3rem;
+  }
+  
+  .links {
+    display:flex;
+    justify-content: flex-end;
+    flex-direction:row;
+    font-size:1.1rem;
+  }
