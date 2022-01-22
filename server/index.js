@@ -4,6 +4,7 @@ const mysql = require("mysql");
 const cors = require("cors");
 const { createPostService } = require("./posts/post-service");
 const { createPostController } = require("./posts/post-controller");
+const { LOG } = require("./common/logger");
 
 app.use(cors());
 app.use(express.json());
@@ -93,6 +94,8 @@ app.delete("/delete/:id", (req, res) => {
   })
 }) */
 
-app.listen(3001, () => {
-  console.log("Yey, your server is running on port 3001");
+const PORT = 3001;
+
+app.listen(PORT, () => {
+  LOG.info(`Server running on port ${PORT}`)
 });

@@ -1,5 +1,6 @@
 const { promisify } = require("util");
 const { TechnicalError } = require('../common/exceptions');
+const { LOG } = require("../common/logger");
 
 function mapPost(post) {
     return {
@@ -17,17 +18,16 @@ function createPostService (db) {
                 const result = await query("INSERT INTO posts (post_content, post_img) VALUES (?,?)", [content, img]);
                 return result.id;
             } catch (error) {
-                console.log(error);
+                LOG.error(error);
                 throw new TechnicalError();
             }
         },
         async getPosts() {
             try {
                 const posts = await query('SELECT * FROM posts');
-                console.log(posts.map(mapPost))
                 return posts.map(mapPost);
             } catch (error) {
-                console.log(error);
+                LOG.error(error);
                 throw new TechnicalError();
             }
         }
