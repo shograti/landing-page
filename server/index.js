@@ -9,7 +9,7 @@ app.use(express.json());
 const db = mysql.createConnection({
   user: "root",
   host: "localhost",
-  password: "",
+  password: "root",
   database: "fermine",
 });
 
@@ -21,8 +21,11 @@ app.post("/dashboard/create", (req, res) => {
   db.query(
     "INSERT INTO posts (post_content, post_img) VALUES (?,?)",
     [post_content, post_img],
-    (err, result) => {
+    (err, _) => {
       if (err) {
+        res.status(500).send({
+          message: "technical exception"
+        });
         console.log(err);
       } else {
         res.send("Values Inserted");
@@ -35,7 +38,9 @@ app.get('/articles', (req, res) => {
    db.query('SELECT * FROM posts', (err, result)=>{
      if(err){
        console.log(err)
-       
+       res.status(500).send({
+        message: "technical exception"
+      });
      } else {
        res.send(result)
      }
@@ -46,7 +51,9 @@ app.get('/brands', (req, res) => {
   db.query('SELECT * FROM brands', (err, result)=>{
     if(err){
       console.log(err)
-      
+      res.status(500).send({
+        message: "technical exception"
+      });
     } else {
       res.send(result)
     }
