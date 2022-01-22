@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
+const { createPostService } = require("./posts/post-service");
+const { createPostController } = require("./posts/post-controller");
 
 app.use(cors());
 app.use(express.json());
@@ -12,6 +14,10 @@ const db = mysql.createConnection({
   password: "root",
   database: "fermine",
 });
+
+const postService = createPostService(db);
+const postController = createPostController(postService);
+app.use('/posts', postController);
 
 app.post("/dashboard/create", (req, res) => {
   const post_content = req.body.content;
