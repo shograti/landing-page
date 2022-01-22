@@ -1,8 +1,8 @@
 const express = require('express');
 const controller = express.Router();
 
-function createPostController(postService) {
-    controller.post("/", async (req, res) => {
+function createPostController(auth, postService) {
+    controller.post("/", auth, async (req, res) => {
         try {
           const { img, content } = req.body;
           const id = await postService.createPost({ img, content });

@@ -5,6 +5,11 @@ const cors = require("cors");
 const { createPostService } = require("./posts/post-service");
 const { createPostController } = require("./posts/post-controller");
 const { LOG } = require("./common/logger");
+const { createUserService } = require("./user/user-service");
+const { createUserController } = require("./user/user-controller");
+const { createAuthService } = require("./common/security/auth-service");
+const { createAuthController } = require("./common/security/auth-contoller");
+const { createAuthenticationMiddleware } = require("./common/security/auth-midleware");
 
 app.use(cors());
 app.use(express.json());
@@ -16,9 +21,20 @@ const db = mysql.createConnection({
   database: "fermine",
 });
 
+const authService = createAuthService(db);
+const authController = createAuthController(authService);
+app.use('/auth', authController);
+
+
+const auth = createAuthenticationMiddleware(authService);
+
 const postService = createPostService(db);
-const postController = createPostController(postService);
+const postController = createPostController(auth, postService);
 app.use('/posts', postController);
+
+const userService = createUserService(db);
+const userController = createUserController(userService);
+app.use('/users', userController);
 
 app.post("/dashboard/create", (req, res) => {
   const post_content = req.body.content;

@@ -65,6 +65,8 @@ CREATE TABLE `users` (
   `user_role` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE UNIQUE INDEX idx_unique_user_email ON users(user_email);
+
 --
 -- Dumping data for table `users`
 --

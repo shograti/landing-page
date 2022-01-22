@@ -23,4 +23,22 @@ class TechnicalError extends WithStatusCode(Error) {
   }
 }
 
-module.exports = { TechnicalError }
+class UnauthorizedError extends WithStatusCode(Error) {
+  constructor() {
+    super(401);
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, UnauthorizedError);
+    }
+  }
+}
+
+class ConflictError extends WithStatusCode(Error) {
+  constructor() {
+    super(404);
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, UnauthorizedError);
+    }
+  }
+}
+
+module.exports = { TechnicalError, UnauthorizedError, ConflictError }
