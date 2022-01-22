@@ -1,0 +1,6 @@
+.brand-list{
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    margin: 15px 30px 15px 30px
+}
