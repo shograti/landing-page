@@ -42,6 +42,18 @@ app.get('/articles', (req, res) => {
    })
 })
 
+app.get('/brands', (req, res) => {
+  db.query('SELECT * FROM brands', (err, result)=>{
+    if(err){
+      console.log(err)
+      
+    } else {
+      res.send(result)
+    }
+  })
+})
+
+
 
 /* app.put('/update', (req, res) => {
 const id = req.body.id;
