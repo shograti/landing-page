@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
+const bcrypt = require("bcrypt");
 
 app.use(cors());
 app.use(express.json());
@@ -53,6 +54,44 @@ app.get('/brands', (req, res) => {
   })
 })
 
+app.post("/register", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const passwordHash = bcrypt.hashSync(password, 10);
+  const userRole = 'user'
+
+
+
+  db.query(
+    "INSERT INTO users (user_email, user_password, user_role) VALUES (?,?,?)",
+    [email, passwordHash,userRole],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("User created");
+      }
+    }
+  );
+});
+
+
+app.post('/login', (req,res)=>{
+  const email = req.body.email
+  const password = req.body.password;
+
+  db.query("SELECT * FROM users WHERE email = ? AND password = ?",
+  [email, password],    
+  (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send("User logged");
+    }
+  } )
+
+
+})
 
 
 /* app.put('/update', (req, res) => {
