@@ -20,3 +20,6 @@ Start frontend development server
 cd client && npm ci && npm start
 ```
 
+Using adminer to inspect database
+
+visit localhost:8080
