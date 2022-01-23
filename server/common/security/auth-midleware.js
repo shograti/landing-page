@@ -1,8 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { LOG } = require("../logger");
 
-const config = process.env;
-
 function createAuthenticationMiddleware(authService) {
     return (req, res, next) => {
         const clientAuth = req.headers["authorization"] || req.cookies["authorization"];
@@ -10,6 +8,7 @@ function createAuthenticationMiddleware(authService) {
             return res.status(401).json({ message: "Unauthorized" });
         }
         const token = clientAuth.replace(RegExp("Bearer(\\s+)" ,"i"), "");
+
         try {
             const user = jwt.verify(token, authService.getJwtSigninKey());
             req.securityContext = { user };
