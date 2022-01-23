@@ -3,4 +3,4 @@ module.exports = {
     ...require("./auth-midleware"),
     ...require("./auth-service"),
     ...require("./roles")
-}
+};

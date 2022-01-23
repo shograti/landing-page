@@ -1,12 +1,12 @@
 const { promisify } = require("util");
-const { TechnicalError } = require('../common');
+const { TechnicalError } = require("../common");
 const { LOG } = require("../common");
 
 function mapPost(post) {
     return {
         img: post.post_img,
         content: post.post_content,
-    }
+    };
 }
 
 function createPostService (db) {
@@ -24,7 +24,7 @@ function createPostService (db) {
         },
         async getPosts() {
             try {
-                const posts = await query('SELECT * FROM posts');
+                const posts = await query("SELECT * FROM posts");
                 return posts.map(mapPost);
             } catch (error) {
                 LOG.error(error);
@@ -34,4 +34,4 @@ function createPostService (db) {
     };
 }
 
-module.exports = { createPostService }
+module.exports = { createPostService };

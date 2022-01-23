@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { LOG } = require("../common");
 
-const JWT_SIGNIN_KEY = process.env['JWT_SIGNING_KEY'] || crypto.randomBytes(16).toString("hex");
+const JWT_SIGNIN_KEY = process.env["JWT_SIGNING_KEY"] || crypto.randomBytes(16).toString("hex");
 
 function createAuthService(db) {
     const query = promisify(db.query.bind(db));
@@ -34,7 +34,7 @@ function createAuthService(db) {
         getJwtSigninKey() {
             return JWT_SIGNIN_KEY;
         }    
-    }
+    };
 }
 
-module.exports = { createAuthService }
+module.exports = { createAuthService };

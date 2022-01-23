@@ -1,6 +1,6 @@
 const { promisify } = require("util");
 const bcrypt = require("bcrypt");
-const { TechnicalError, ConflictError, UnauthorizedError } = require('../common/exceptions');
+const { TechnicalError, ConflictError, UnauthorizedError } = require("../common/exceptions");
 const { LOG } = require("../common/logger");
 const { Roles } = require("../security/roles");
 
@@ -9,7 +9,7 @@ function mapUser(user) {
         id: user.user_id,
         email: user.user_email,
         role: user.user_role,
-    }
+    };
 }
 
 function createUserService (db) {
@@ -24,7 +24,7 @@ function createUserService (db) {
                 return user.id;
             } catch (error) {
                 LOG.error(error);
-                if (error.code === 'ER_DUP_ENTRY') {
+                if (error.code === "ER_DUP_ENTRY") {
                     throw new ConflictError(`Email ${email} is already attached to an account`);
                 }
                 throw new TechnicalError();
@@ -35,7 +35,7 @@ function createUserService (db) {
                 throw new UnauthorizedError();
             }
             try {
-                const [user] = await query("SELECT * FROM users WHERE user_id = ?", [securityContext.user.id])
+                const [user] = await query("SELECT * FROM users WHERE user_id = ?", [securityContext.user.id]);
                 return mapUser(user);
             } catch (error) {
                 LOG.error(error);
@@ -45,4 +45,4 @@ function createUserService (db) {
     };
 }
 
-module.exports = { createUserService }
+module.exports = { createUserService };

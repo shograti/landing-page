@@ -1,5 +1,5 @@
 function httpStatus(code, message) {
-    return { code, message }
+    return { code, message };
 }
 
 const HttpStatus = Object.freeze({
@@ -13,4 +13,4 @@ const HttpStatus = Object.freeze({
     INTERNAL_SERVER_ERROR: httpStatus(500, "Internal Server Error")
 });
 
-module.exports = { HttpStatus }
+module.exports = { HttpStatus };
