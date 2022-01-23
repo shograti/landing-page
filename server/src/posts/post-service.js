@@ -1,6 +1,6 @@
 const { promisify } = require("util");
-const { TechnicalError } = require('../common/exceptions');
-const { LOG } = require("../common/logger");
+const { TechnicalError } = require('../common');
+const { LOG } = require("../common");
 
 function mapPost(post) {
     return {

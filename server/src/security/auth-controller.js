@@ -1,5 +1,5 @@
 const express = require('express');
-const { LOG } = require('../logger');
+const { LOG } = require('../common');
 const controller = express.Router();
 
 function createAuthController(authService) {

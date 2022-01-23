@@ -50,7 +50,6 @@ class NotFoundError extends ApiErrorMixin(Error) {
 
 class ConflictError extends ApiErrorMixin(Error) {
   message;
-
   constructor(message = HttpStatus.CONFLICT.message) {
     super(HttpStatus.CONFLICT.code);
     this.message = message;

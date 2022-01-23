@@ -23,7 +23,7 @@ cd client && npm ci && npm start
 
 ## Using adminer to inspect database
 
-visit localhost:8080
+visit http://localhost:8080 and use the mysql credentials defined in your docker-compose.yaml
 
 ## Environment Variables (with default values)
 ```shell

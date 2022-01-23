@@ -2,7 +2,7 @@ const { promisify } = require("util");
 const bcrypt = require("bcryptjs");
 const { TechnicalError, ConflictError, UnauthorizedError } = require('../common/exceptions');
 const { LOG } = require("../common/logger");
-const { Roles } = require("../common/security/roles");
+const { Roles } = require("../security/roles");
 
 function mapUser(user) {
     return {

@@ -1,6 +1,6 @@
 const express = require('express');
-const { HttpStatus } = require('../common/http-status');
-const { LOG } = require('../common/logger');
+const { HttpStatus } = require('../common');
+const { LOG } = require('../common');
 const controller = express.Router();
 
 function createUserController(auth, userService) {

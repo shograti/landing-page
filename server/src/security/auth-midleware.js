@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
-const { HttpStatus } = require("../http-status");
-const { LOG } = require("../logger");
+const { HttpStatus } = require("../common");
+const { LOG } = require("../common");
 
 function createAuthenticationMiddleware(authService) {
     return (req, res, next) => {
