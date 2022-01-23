@@ -2,6 +2,7 @@ const { promisify } = require("util");
 const bcrypt = require("bcryptjs");
 const { TechnicalError, ConflictError, UnauthorizedError } = require('../common/exceptions');
 const { LOG } = require("../common/logger");
+const { Roles } = require("../common/security/roles");
 
 function mapUser(user) {
     return {
@@ -17,7 +18,7 @@ function createUserService (db) {
     return {
         async createUser({ email, password }) {
             const hash = await bcrypt.hash(password, 10);
-            const role = 'USER';
+            const role = Roles.USER;
             try {
                 const user = await query("INSERT INTO users (user_email, user_password, user_role) VALUES (?,?,?)", [email, hash, role]);
                 return user.id;
