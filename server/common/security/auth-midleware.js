@@ -1,11 +1,12 @@
 const jwt = require("jsonwebtoken");
+const { HttpStatus } = require("../http-status");
 const { LOG } = require("../logger");
 
 function createAuthenticationMiddleware(authService) {
     return (req, res, next) => {
         const clientAuth = req.headers["authorization"] || req.cookies["authorization"];
         if (!clientAuth) {
-            return res.status(401).json({ message: "Unauthorized" });
+            return res.status(HttpStatus.UNAUTHORIZED.code).json({ message: HttpStatus.UNAUTHORIZED.message });
         }
         const token = clientAuth.replace(RegExp("Bearer(\\s+)" ,"i"), "");
 
@@ -14,7 +15,7 @@ function createAuthenticationMiddleware(authService) {
             req.securityContext = { user };
         } catch (err) {
             LOG.error(err);
-            return res.status(401).json({ message: "Unauthorized" });
+            return res.status(HttpStatus.UNAUTHORIZED.code).json({ message: HttpStatus.UNAUTHORIZED.message });
         }
         return next();
     };

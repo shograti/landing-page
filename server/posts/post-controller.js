@@ -1,4 +1,5 @@
 const express = require('express');
+const { HttpStatus } = require('../common/http-status');
 const controller = express.Router();
 
 function createPostController(auth, postService) {
@@ -6,7 +7,7 @@ function createPostController(auth, postService) {
         try {
           const { img, content } = req.body;
           const id = await postService.createPost({ img, content });
-          res.status(201).json({ id });
+          res.status(HttpStatus.CREATED.code).json({ id });
         } catch (error) {
           res.status(error.status).json(error.body());
         }
@@ -15,7 +16,7 @@ function createPostController(auth, postService) {
     controller.get("/", async(_, res) => {
         try {
             const posts = await postService.getPosts();
-            res.status(200).json({ data: posts });
+            res.status(HttpStatus.OK.code).json({ data: posts });
         } catch (error) {
             res.status(error.status()).json(error());
         }

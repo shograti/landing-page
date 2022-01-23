@@ -1,3 +1,5 @@
+const { HttpStatus } = require("./http-status");
+
 function ApiErrorMixin(clazz) {
   return class extends Error {
     #status;
@@ -24,18 +26,24 @@ function ApiErrorMixin(clazz) {
 
 class TechnicalError extends ApiErrorMixin(Error) {
   message;
-
-  constructor(message = "Internal Server Error") {
-    super(500);
+  constructor(message = HttpStatus.INTERNAL_SERVER_ERROR.message) {
+    super(HttpStatus.INTERNAL_SERVER_ERROR.code);
     this.message = message;
   }
 }
 
 class UnauthorizedError extends ApiErrorMixin(Error) {
   message;
+  constructor(message = HttpStatus.UNAUTHORIZED.message) {
+    super(HttpStatus.UNAUTHORIZED.code);
+    this.message = message;
+  }
+}
 
-  constructor(message = "Unauthorized") {
-    super(401);
+class NotFoundError extends ApiErrorMixin(Error) {
+  message;
+  constructor(message = HttpStatus.NOT_FOUND.message) {
+    super(HttpStatus.NOT_FOUND.code);
     this.message = message;
   }
 }
@@ -43,8 +51,8 @@ class UnauthorizedError extends ApiErrorMixin(Error) {
 class ConflictError extends ApiErrorMixin(Error) {
   message;
 
-  constructor(message = "Conflict") {
-    super(409);
+  constructor(message = HttpStatus.CONFLICT.message) {
+    super(HttpStatus.CONFLICT.code);
     this.message = message;
   }
 }

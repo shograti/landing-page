@@ -1,4 +1,5 @@
 const express = require('express');
+const { HttpStatus } = require('../common/http-status');
 const { LOG } = require('../common/logger');
 const controller = express.Router();
 
@@ -7,7 +8,7 @@ function createUserController(auth, userService) {
         try {
           const { email, password } = req.body;
           const id = await userService.createUser({ email, password });
-          res.status(201).json({ id });
+          res.status(HttpStatus.CREATED.code).json({ id });
         } catch (error) {
           LOG.error(error);
           res.status(error.status()).json(error.body());
@@ -17,7 +18,7 @@ function createUserController(auth, userService) {
     controller.get("/me", auth, async (req, res) => {
         try {
           const user = await userService.getCurrentUser(req.securityContext);
-          res.status(200).json(user);
+          res.status(HttpStatus.OK.code).json(user);
         } catch (error) {
           LOG.error(error);
           res.status(error.status()).json(error.body());
