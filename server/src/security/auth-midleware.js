@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { HttpStatus, UnauthorizedError } = require("../common");
+const { UnauthorizedError } = require("../common");
 const { LOG } = require("../common");
 
 function unfoldToken(req) {
@@ -18,9 +18,9 @@ function createAuthenticationMiddleware(authService) {
             const token = unfoldToken(req);
             const user = jwt.verify(token, authService.getJwtSigninKey());
             req.securityContext = { user };
-        } catch (err) {
-            LOG.error(err);
-            return res.status(HttpStatus.UNAUTHORIZED.code).json({ message: HttpStatus.UNAUTHORIZED.message });
+        } catch (error) {
+            LOG.error(error);
+            next(new UnauthorizedError());
         }
         return next();
     };

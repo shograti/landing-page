@@ -40,6 +40,23 @@ class UnauthorizedError extends ApiErrorMixin(Error) {
     }
 }
 
+class ForbiddenError extends ApiErrorMixin(Error) {
+    message;
+    constructor(message = HttpStatus.FORBIDDEN.message) {
+        super(HttpStatus.FORBIDDEN.code);
+        this.message = message;
+    }
+}
+
+class BadRequestError extends ApiErrorMixin(Error) {
+    message;
+    constructor(message = HttpStatus.BAD_REQUEST.message) {
+        super(HttpStatus.BAD_REQUEST.code);
+        this.message = message;
+    }
+}
+
+
 class NotFoundError extends ApiErrorMixin(Error) {
     message;
     constructor(message = HttpStatus.NOT_FOUND.message) {
@@ -56,4 +73,4 @@ class ConflictError extends ApiErrorMixin(Error) {
     }
 }
 
-module.exports = { TechnicalError, UnauthorizedError, ConflictError, NotFoundError };
+module.exports = { TechnicalError, UnauthorizedError, ConflictError, NotFoundError, BadRequestError, ForbiddenError };

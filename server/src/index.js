@@ -8,6 +8,7 @@ const { LOG } = require("./common");
 const { createPostService, createPostController } = require("./posts");
 const { createUserService, createUserController } = require("./user");
 const { createAuthService, createAuthController, createAuthenticationMiddleware } = require("./security");
+const { handleError } = require("./common/error-handler");
 
 app.use(cors());
 app.use(express.json());
@@ -32,6 +33,10 @@ app.use("/posts", postController);
 const userService = createUserService(db);
 const userController = createUserController(auth, userService);
 app.use("/users", userController);
+
+app.use((err, req, res) => {
+    handleError(err, res);
+});
 
 const PORT = process.env["HTTP_PORT"] || 3001;
 
