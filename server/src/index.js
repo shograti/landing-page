@@ -15,10 +15,10 @@ app.use(cors());
 app.use(express.json());
 
 const db = mysql.createConnection({
-  user: "root",
-  host: "localhost",
-  password: "root",
-  database: "fermine",
+  host: process.env['MYSQL_HOST'] || "localhost",
+  user: process.env['MYSQL_USERNAME'] || "root",
+  password: process.env['MYSQL_PASSWORD'] || "root",
+  database: process.env['MYSQL_PASSWORD'] || "fermine",
 });
 
 const authService = createAuthService(db);

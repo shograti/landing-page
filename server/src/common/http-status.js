@@ -1,5 +1,3 @@
-const { http } = require("winston")
-
 function httpStatus(code, message) {
     return { code, message }
 }
