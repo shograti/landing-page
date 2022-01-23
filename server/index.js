@@ -33,7 +33,7 @@ const postController = createPostController(auth, postService);
 app.use('/posts', postController);
 
 const userService = createUserService(db);
-const userController = createUserController(userService);
+const userController = createUserController(auth, userService);
 app.use('/users', userController);
 
 app.post("/dashboard/create", (req, res) => {

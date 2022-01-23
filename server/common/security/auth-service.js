@@ -25,7 +25,7 @@ function createAuthService(db) {
                     throw new UnauthorizedError();
                 }
 
-                return jwt.sign({ user_id: user.user_id, email }, JWT_SIGNIN_KEY, { expiresIn: "24h" });
+                return jwt.sign({ id: user.user_id, email: user.user_email, role: user.user_role }, JWT_SIGNIN_KEY, { expiresIn: "24h" });
             } catch (error) {
                 throw error instanceof UnauthorizedError ? error : new TechnicalError();
             }

@@ -1,43 +1,51 @@
-function WithStatusCode(clazz) {
+function ApiErrorMixin(clazz) {
   return class extends Error {
-    statusCode;
+    #status;
 
-    constructor(statusCode) {
+    constructor(status) {
       super();
       this.status = this.status.bind(this);
-      this.statusCode = statusCode;
+      this.body = this.body.bind(this);
+      this.#status = status;
+      if (Error.captureStackTrace) {
+        Error.captureStackTrace(this, clazz);
+      }
     }
 
     status() {
-      return this.statusCode;
+      return this.#status;
+    }
+
+    body() {
+      return this.message ? { message: this.message } : { message: "No Details" };
     }
   }
 }
 
-class TechnicalError extends WithStatusCode(Error) {
-  constructor() {
+class TechnicalError extends ApiErrorMixin(Error) {
+  message;
+
+  constructor(message = "Internal Server Error") {
     super(500);
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, TechnicalError);
-    }
+    this.message = message;
   }
 }
 
-class UnauthorizedError extends WithStatusCode(Error) {
-  constructor() {
+class UnauthorizedError extends ApiErrorMixin(Error) {
+  message;
+
+  constructor(message = "Unauthorized") {
     super(401);
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, UnauthorizedError);
-    }
+    this.message = message;
   }
 }
 
-class ConflictError extends WithStatusCode(Error) {
-  constructor() {
-    super(404);
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, UnauthorizedError);
-    }
+class ConflictError extends ApiErrorMixin(Error) {
+  message;
+
+  constructor(message = "Conflict") {
+    super(409);
+    this.message = message;
   }
 }
 

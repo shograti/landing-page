@@ -8,7 +8,7 @@ function createPostController(auth, postService) {
           const id = await postService.createPost({ img, content });
           res.status(201).json({ id });
         } catch (error) {
-          res.status(error.status()).send();
+          res.status(error.status).json(error.body());
         }
     });
 
@@ -17,7 +17,7 @@ function createPostController(auth, postService) {
             const posts = await postService.getPosts();
             res.status(200).json({ data: posts });
         } catch (error) {
-            res.status(error.status()).send();
+            res.status(error.status()).json(error());
         }
     });
 

@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { LOG } = require("../logger");
 
 const config = process.env;
 
@@ -10,9 +11,10 @@ function createAuthenticationMiddleware(authService) {
         }
         const token = authHeader.replace("Bearer ", "");
         try {
-            const userInfo = jwt.verify(token, authService.getJwtSigninKey());
-            req.securityContext = { userInfo };
+            const user = jwt.verify(token, authService.getJwtSigninKey());
+            req.securityContext = { user };
         } catch (err) {
+            LOG.error(err);
             return res.status(401).json({ message: "Unauthorized" });
         }
         return next();

@@ -10,7 +10,7 @@ function createAuthController(authService) {
           res.status(200).json({ token });
         } catch (error) {
           LOG.error(error);
-          res.status(error.status()).send();
+          res.status(error.status()).json(error.body());
         }
     });
     return controller;
