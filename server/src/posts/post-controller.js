@@ -1,5 +1,5 @@
 const express = require("express");
-const { HttpStatus } = require("../common");
+const { HttpStatus, LOG } = require("../common");
 const controller = express.Router();
 
 function createPostController(auth, postService) {
@@ -18,16 +18,34 @@ function createPostController(auth, postService) {
             const posts = await postService.getPosts();
             res.status(HttpStatus.OK.code).json({ data: posts });
         } catch (error) {
-            res.status(error.status()).json(error());
+            res.status(error.status()).json(error.body());
         }
     });
 
-    controller.get("/:id", async(_, res) => {
+    controller.get("/:id", async(req, res) => {
         try {
-            const posts = await postService.getPosts();
-            res.status(HttpStatus.OK.code).json({ data: posts });
+            const post = await postService.getPost(req.params.id);
+            res.status(HttpStatus.OK.code).json(post);
         } catch (error) {
-            res.status(error.status()).json(error());
+            res.status(error.status()).json(error.body());
+        }
+    });
+
+    controller.delete("/:id", auth, async(req, res) => {
+        try {
+            await postService.deletePost(req.params.id);
+            res.status(HttpStatus.NO_CONTENT.code).end();
+        } catch (error) {
+            res.status(error.status()).json(error.body());
+        }
+    });
+
+    controller.put("/:id", auth, async(req, res) => {
+        try {
+            await postService.updatePost(req.params.id, req.body);
+            res.status(HttpStatus.OK.code).end();
+        } catch (error) {
+            res.status(error.status()).json(error.body());
         }
     });
 
