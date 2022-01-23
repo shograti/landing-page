@@ -5,11 +5,11 @@ const config = process.env;
 
 function createAuthenticationMiddleware(authService) {
     return (req, res, next) => {
-        const authHeader = req.headers["authorization"];
-        if (!authHeader) {
+        const clientAuth = req.headers["authorization"] || req.cookies["authorization"];
+        if (!clientAuth) {
             return res.status(401).json({ message: "Unauthorized" });
         }
-        const token = authHeader.replace("Bearer ", "");
+        const token = clientAuth.replace(RegExp("Bearer(\\s+)" ,"i"), "");
         try {
             const user = jwt.verify(token, authService.getJwtSigninKey());
             req.securityContext = { user };

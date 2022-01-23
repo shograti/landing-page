@@ -7,6 +7,7 @@ function createAuthController(authService) {
         try {
           const { email, password } = req.body;
           const token = await authService.getToken({ email, password });
+          res.cookie("Authorization", token, { httpOnly: true });
           res.status(200).json({ token });
         } catch (error) {
           LOG.error(error);
