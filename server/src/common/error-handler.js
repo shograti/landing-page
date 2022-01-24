@@ -1,17 +1,10 @@
-const { NotFoundError, UnauthorizedError, ConflictError, ForbiddenError, BadRequestError, TechnicalError } = require(".");
+const { TechnicalError, ApiError } = require(".");
 
 function getOrBuidApiError(error) {
-    switch (error.constructor) {
-    case NotFoundError:
-    case UnauthorizedError:
-    case ConflictError:
-    case ForbiddenError:
-    case BadRequestError:
-    case TechnicalError:
+    if (error instanceof ApiError) {
         return error;
-    default:
-        return new TechnicalError();        
-    }
+    } 
+    return new TechnicalError();
 }
  
 function handleError(error, res) {
