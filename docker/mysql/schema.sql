@@ -72,7 +72,7 @@ CREATE UNIQUE INDEX idx_unique_user_email ON users(user_email);
 --
 
 INSERT INTO `users` (`user_id`, `user_email`, `user_password`, `user_role`) VALUES
-(1, 'echecsleo@gmail.com', 'shograti', 'admin');
+(1, 'echecsleo@gmail.com', 'shograti', 'ADMIN');
 
 --
 -- Indexes for dumped tables
