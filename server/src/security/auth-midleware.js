@@ -18,11 +18,11 @@ function createAuthenticationMiddleware(authService) {
             const token = unfoldToken(req);
             const user = jwt.verify(token, authService.getJwtSigninKey());
             req.securityContext = { user };
+            return next();
         } catch (error) {
             LOG.error(error);
             next(new UnauthorizedError());
         }
-        return next();
     };
 }
 
