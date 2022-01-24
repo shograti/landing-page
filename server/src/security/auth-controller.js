@@ -1,4 +1,5 @@
 const express = require("express");
+const { HttpStatus } = require("../common");
 const controller = express.Router();
 
 function createAuthController(authService) {
@@ -7,7 +8,7 @@ function createAuthController(authService) {
             const { email, password } = req.body;
             const token = await authService.getToken({ email, password });
             res.cookie("Authorization", token, { httpOnly: true });
-            res.status(200).json({ token });
+            res.status(HttpStatus.OK.code).json({ token });
         } catch (error) {
             next(error);
         }
