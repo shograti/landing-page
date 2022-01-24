@@ -36,8 +36,8 @@ const userService = createUserService(db);
 const userController = createUserController(auth, userService);
 app.use("/users", userController);
 
-app.use((err, req, res) => {
-    handleError(err, res);
+app.use((err, req, res, next) => {
+    handleError(err, res, next);
 });
 
 app.listen(HTTP_PORT, () => {

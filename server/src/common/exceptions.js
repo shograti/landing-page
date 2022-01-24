@@ -74,3 +74,4 @@ class ConflictError extends ApiErrorMixin(Error) {
 }
 
 module.exports = { TechnicalError, UnauthorizedError, ConflictError, NotFoundError, BadRequestError, ForbiddenError };
+ 

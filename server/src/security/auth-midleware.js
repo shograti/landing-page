@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const { UnauthorizedError } = require("../common");
-const { LOG } = require("../common");
 
 function unfoldToken(req) {
     if (req.cookiers && req.cookies["authorization"]) {
@@ -18,9 +17,8 @@ function createAuthenticationMiddleware(authService) {
             const token = unfoldToken(req);
             const user = jwt.verify(token, authService.getJwtSigninKey());
             req.securityContext = { user };
-            return next();
+            next();
         } catch (error) {
-            LOG.error(error);
             next(new UnauthorizedError());
         }
     };
