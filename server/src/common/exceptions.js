@@ -3,12 +3,14 @@ const { HttpStatus } = require("./http-status");
 function ApiErrorMixin(clazz) {
     return class extends Error {
         #status;
+        #message;
 
-        constructor(status) {
+        constructor(status, message) {
             super();
+            this.#status = status;
+            this.#message = message;
             this.status = this.status.bind(this);
             this.body = this.body.bind(this);
-            this.#status = status;
             if (Error.captureStackTrace) {
                 Error.captureStackTrace(this, clazz);
             }
@@ -19,57 +21,45 @@ function ApiErrorMixin(clazz) {
         }
 
         body() {
-            return this.message ? { message: this.message } : { message: "No Details" };
+            return this.#message ? { message: this.#message } : { message: "No Details" };
         }
     };
 }
 
 class TechnicalError extends ApiErrorMixin(Error) {
-    message;
     constructor(message = HttpStatus.INTERNAL_SERVER_ERROR.message) {
-        super(HttpStatus.INTERNAL_SERVER_ERROR.code);
-        this.message = message;
+        super(HttpStatus.INTERNAL_SERVER_ERROR.code, message);
     }
 }
 
 class UnauthorizedError extends ApiErrorMixin(Error) {
-    message;
     constructor(message = HttpStatus.UNAUTHORIZED.message) {
-        super(HttpStatus.UNAUTHORIZED.code);
-        this.message = message;
+        super(HttpStatus.UNAUTHORIZED.code, message);
     }
 }
 
 class ForbiddenError extends ApiErrorMixin(Error) {
-    message;
     constructor(message = HttpStatus.FORBIDDEN.message) {
-        super(HttpStatus.FORBIDDEN.code);
-        this.message = message;
+        super(HttpStatus.FORBIDDEN.code, message);
     }
 }
 
 class BadRequestError extends ApiErrorMixin(Error) {
-    message;
     constructor(message = HttpStatus.BAD_REQUEST.message) {
-        super(HttpStatus.BAD_REQUEST.code);
-        this.message = message;
+        super(HttpStatus.BAD_REQUEST.code, message);
     }
 }
 
 
 class NotFoundError extends ApiErrorMixin(Error) {
-    message;
     constructor(message = HttpStatus.NOT_FOUND.message) {
-        super(HttpStatus.NOT_FOUND.code);
-        this.message = message;
+        super(HttpStatus.NOT_FOUND.code, message);
     }
 }
 
 class ConflictError extends ApiErrorMixin(Error) {
-    message;
     constructor(message = HttpStatus.CONFLICT.message) {
-        super(HttpStatus.CONFLICT.code);
-        this.message = message;
+        super(HttpStatus.CONFLICT.code, message);
     }
 }
 
