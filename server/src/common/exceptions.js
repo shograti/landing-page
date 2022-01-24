@@ -1,7 +1,7 @@
 const { HttpStatus } = require("./http-status");
 
 function ApiErrorMixin(clazz) {
-    return class extends Error {
+    return class extends clazz {
         #status;
         #message;
 
