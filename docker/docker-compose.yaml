@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+
+  mysql:
+    # image: arm64v8/mariadb
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: fermine
+      MYSQL_USER: fermine
+      MYSQL_PASSWORD: fermine
+    ports: 
+      - "3306:3306"
+    volumes:
+      - "mysql:/var/lib/mysql"
+      - type: bind
+        source: $PWD/mysql/schema.sql
+        target: /docker-entrypoint-initdb.d/schema.sql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+
+volumes:
+  mysql:
